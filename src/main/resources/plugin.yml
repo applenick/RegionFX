@@ -1,4 +1,5 @@
 name: RegionFX
 main: com.applenick.RegionFX.RegionFX
 version: ${project.version}-${git.commit.id.abbrev}
+depend: [WorldGuard]
 author: AppleNick

@@ -8,6 +8,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.applenick.RegionFX.commands.RegionCommands;
+import com.applenick.RegionFX.regions.EffectRegionManager;
+import com.applenick.RegionFX.tasks.EffectTaskManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandPermissionsException;
@@ -15,6 +17,7 @@ import com.sk89q.minecraft.util.commands.CommandUsageException;
 import com.sk89q.minecraft.util.commands.CommandsManager;
 import com.sk89q.minecraft.util.commands.MissingNestedCommandException;
 import com.sk89q.minecraft.util.commands.WrappedCommandException;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 /************************************************
 			 Created By AppleNick
@@ -34,22 +37,40 @@ public class RegionFX extends JavaPlugin {
 	public static WorldGuardPlugin getWorldGuard(){
 		return wgp;
 	}
+	
+	private EffectRegionManager regionManager;
+	public EffectRegionManager getEffectRegionManager(){
+		return regionManager;
+	}
+	
+	private EffectTaskManager taskManager;
+	public EffectTaskManager getTaskManager(){
+		return taskManager;
+	}
 
 	
 	@Override
 	public void onEnable(){
 		plugin = this;
 		
+		//Save Config
 		this.saveDefaultConfig();
 		
+		//Check for WG
+		this.registerWorldGuard();
+		
+		//Setup Region Manager
+		regionManager = new EffectRegionManager();
+		taskManager = new EffectTaskManager();
+		
 		//Setup Commands
-		this.setupCommandManager();
+		this.setupCommands();
 	}
 	
 	
 	@Override
 	public void onDisable(){
-		
+		taskManager.getTask().cancle();
 	}
 	
 	
