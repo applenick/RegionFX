@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.applenick.RegionFX.commands.RegionCommands;
@@ -22,10 +23,18 @@ Copyright © 2016 , AppleNick, All rights reserved.
  *************************************************/
 public class RegionFX extends JavaPlugin {
 	
+	private static String PREFIX = ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE + "Region" + ChatColor.AQUA + "FX" + ChatColor.GRAY + "]";
+	
 	private static RegionFX plugin;
 	public static RegionFX get(){
 		return plugin;
 	}
+	
+	private static WorldGuardPlugin wgp;
+	public static WorldGuardPlugin getWorldGuard(){
+		return wgp;
+	}
+
 	
 	@Override
 	public void onEnable(){
@@ -40,6 +49,25 @@ public class RegionFX extends JavaPlugin {
 	
 	@Override
 	public void onDisable(){
+		
+	}
+	
+	
+	/**
+	 * World Guard Dependence
+	 */
+	
+	private void registerWorldGuard(){
+		PluginManager PM = this.getServer().getPluginManager();
+		
+		if(PM.getPlugin("WorldGuard") != null){
+			wgp = (WorldGuardPlugin) PM.getPlugin("WorldGuard");
+			console(ChatColor.GREEN + "WorldGuard Detected");
+			return;
+		}else{
+			console(ChatColor.RED + "WorldGuard Not Found - Please enable WorldGuard");
+			return;
+		}
 		
 	}
 	
@@ -88,6 +116,14 @@ public class RegionFX extends JavaPlugin {
 			sender.sendMessage(ChatColor.RED + e.getMessage());
 		}
 		return true;
+	}
+	
+	/**
+	 * Utils
+	 */
+	
+	public void console(String msg){
+		getServer().getConsoleSender().sendMessage(PREFIX + ChatColor.RESET + msg);
 	}
 
 }
