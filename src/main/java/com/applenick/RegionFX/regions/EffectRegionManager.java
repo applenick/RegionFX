@@ -43,7 +43,6 @@ public class EffectRegionManager {
 			String world = info[4];
 
 			if(PotionEffectType.getByName(effect) != null){
-
 				if(Bukkit.getWorld(world) != null){
 					ProtectedRegion region = getRegion(name , Bukkit.getWorld(world));
 					
@@ -60,7 +59,8 @@ public class EffectRegionManager {
 					RegionFX.get().console(ChatColor.AQUA + name + ChatColor.RED + " could not locate it's world " + ChatColor.GRAY + world);
 					return;
 				}
-
+			}else{
+				RegionFX.get().console(ChatColor.AQUA + name + ChatColor.RED + " is not using a valid effect  " + ChatColor.DARK_RED + effect);
 			}
 		}
 
