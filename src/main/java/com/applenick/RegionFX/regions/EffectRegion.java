@@ -118,7 +118,7 @@ public class EffectRegion {
 
 	@Override
 	public String toString(){
-		return this.getName() + ":" + this.getType().toString() + ":" + this.getLevel() + ":" + this.isActive();
+		return this.getName() + ":" + this.getType().getName() + ":" + this.getLevel() + ":" + this.isActive();
 	}
 	
 	public void save(){
