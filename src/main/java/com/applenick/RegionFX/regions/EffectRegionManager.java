@@ -71,7 +71,7 @@ public class EffectRegionManager {
 	}
 	
 	public boolean insideRegion(Player player, ProtectedRegion region){
-		LocalPlayer lp = (LocalPlayer) player;
+		LocalPlayer lp = RegionFX.getWorldGuard().wrapPlayer(player);
 		return region.contains(lp.getPosition());
 	}
 
