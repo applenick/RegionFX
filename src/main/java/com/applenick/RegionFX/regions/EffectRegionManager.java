@@ -82,9 +82,28 @@ public class EffectRegionManager {
 		return null;
 	}
 	
-	public boolean insideRegion(Player player, ProtectedRegion region){
+	private boolean insideRegion(Player player, ProtectedRegion region){
 		LocalPlayer lp = RegionFX.getWorldGuard().wrapPlayer(player);
 		return region.contains(lp.getPosition());
+	}
+	
+	
+	public boolean insideRegion(Player player){
+		for(ProtectedRegion region : this.loaded_regions.keySet()){
+			if(insideRegion(player , region)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ProtectedRegion getPlayerRegion(Player player){
+		for(ProtectedRegion region : this.loaded_regions.keySet()){
+			if(insideRegion(player , region)){
+				return region;
+			}
+		}
+		return null;
 	}
 	
 

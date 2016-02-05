@@ -1,7 +1,6 @@
 package com.applenick.RegionFX.tasks;
 
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
 
 import com.applenick.RegionFX.RegionFX;
 import com.applenick.RegionFX.regions.EffectPlayer;
@@ -28,34 +27,28 @@ public class EffectTask implements Runnable {
 	@Override
 	public void run() {
 		for(Player player : RegionFX.get().getServer().getOnlinePlayers()){
-			player.sendMessage("Check Run");
-			for(ProtectedRegion region : RegionFX.get().getEffectRegionManager().getLoadedRegions().keySet()){
-				if(RegionFX.get().getEffectRegionManager().insideRegion(player, region)){					
-					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
-						EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
-						if(ep.getRegion().getRegion() != region){
-							//Remove player from an overlapping Region & Add new Region
-							ep.removeEffects();
-							RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
+			if(RegionFX.get().getEffectRegionManager().insideRegion(player)){
+				ProtectedRegion region = RegionFX.get().getEffectRegionManager().getPlayerRegion(player);
+				if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
+					EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
+					if(ep.getRegion().getRegion() != region){
+						//Remove player from an overlapping Region & Add new Region
+						ep.removeEffects();
+						RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
 
-							EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
-							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
-							
-							player.sendMessage("Applied/Removed method 1");
-						}						
-					}else{
 						EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
-						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
-						player.sendMessage("Applied method 1");
-					}
+						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));						
+					}						
 				}else{
-					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
-						EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
-						if(ep != null){
-							ep.removeEffects();
-							RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
-							player.sendMessage("Removed method 2");
-						}
+					EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
+					RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
+				}
+			}else{
+				if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
+					EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
+					if(ep != null){
+						ep.removeEffects();
+						RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
 					}
 				}
 			}
