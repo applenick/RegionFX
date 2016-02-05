@@ -38,11 +38,15 @@ public class EffectTask implements Runnable {
 							RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
 
 							EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
-							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));							
+							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
+							
+							player.sendMessage("Applied/Removed method 1");
 						}						
 					}else{
 						EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
 						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
+						player.sendMessage("Applied method 1");
+
 					}
 				}else{
 					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
@@ -50,6 +54,7 @@ public class EffectTask implements Runnable {
 						if(ep != null){
 							ep.removeEffects();
 							RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
+							player.sendMessage("Removed method 2");
 						}
 					}
 				}
