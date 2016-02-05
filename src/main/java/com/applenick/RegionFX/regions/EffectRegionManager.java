@@ -32,10 +32,7 @@ public class EffectRegionManager {
 		this.effected_players = Lists.newArrayList();
 
 		for(String s : RegionFX.get().getConfig().getStringList("regions")){
-			String[] info = StringUtils.splitByWholeSeparator(s, ":");
-			//For Debug Purposes
-			RegionFX.get().console(info.toString());
-			
+			String[] info = StringUtils.splitByWholeSeparator(s, ":");			
 			if(info.length < 5 || info == null){
 				RegionFX.get().console(ChatColor.DARK_RED + "There was an empty or incomplete entry saved. Please delete config or restore it to an eariler save.");
 				RegionFX.get().getServer().getPluginManager().disablePlugin(RegionFX.get());
@@ -74,6 +71,15 @@ public class EffectRegionManager {
 	
 	public HashMap<ProtectedRegion,EffectRegion> getLoadedRegions(){
 		return this.loaded_regions;
+	}
+	
+	public EffectRegion getEffectRegion(String name){
+		for(EffectRegion rg : this.getLoadedRegions().values()){
+			if(rg.getName().equalsIgnoreCase(name)){
+				return rg;
+			}
+		}
+		return null;
 	}
 	
 	public boolean insideRegion(Player player, ProtectedRegion region){
