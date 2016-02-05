@@ -6,7 +6,7 @@ RegionFX is a Spigot plugin which hooks into WorldGuard to provide constant effe
 
 **/regionfx create [name] [effect] [level]** - Creates a new EffectRegion with the provided values
 
-**/regionfx delete [name] - **Will Delete the provided EffectRegion name
+**/regionfx delete [name]** - Will Delete the provided EffectRegion name
 
 **/regionfx list** - Displays a list of all active Effect Regions
 
