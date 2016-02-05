@@ -26,5 +26,5 @@ RegionFX is a Spigot plugin which hooks into WorldGuard to provide constant effe
 
 
 ### Permissions
- ##### regionfx.admin
+##### regionfx.admin
    Access to all commands
