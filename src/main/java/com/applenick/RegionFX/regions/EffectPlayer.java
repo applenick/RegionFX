@@ -30,10 +30,14 @@ public class EffectPlayer {
 		
 	public void applyEffects(){
 		player.addPotionEffect(new PotionEffect(region.getType() , Integer.MAX_VALUE, region.getLevel(), true, false), true);
+		//Debug Info
+		player.sendMessage("Activated EFFECTS inside of " + region.getName());
 	}
 	
 	public void removeEffects(){
 		player.removePotionEffect(region.getType());
+		//Debug Info
+		player.sendMessage("Removed EFFECTS inside of " + region.getName());
 	}
 	
 }

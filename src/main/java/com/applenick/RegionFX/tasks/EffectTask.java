@@ -1,6 +1,7 @@
 package com.applenick.RegionFX.tasks;
 
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import com.applenick.RegionFX.RegionFX;
 import com.applenick.RegionFX.regions.EffectPlayer;
@@ -43,7 +44,7 @@ public class EffectTask implements Runnable {
 							RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
 
 							EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
-							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
+							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));							
 						}
 					}
 				}else{
