@@ -28,6 +28,7 @@ public class EffectTask implements Runnable {
 	@Override
 	public void run() {
 		for(Player player : RegionFX.get().getServer().getOnlinePlayers()){
+			player.sendMessage("Check Run");
 			for(ProtectedRegion region : RegionFX.get().getEffectRegionManager().getLoadedRegions().keySet()){
 				if(RegionFX.get().getEffectRegionManager().insideRegion(player, region)){					
 					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
@@ -46,7 +47,6 @@ public class EffectTask implements Runnable {
 						EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
 						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
 						player.sendMessage("Applied method 1");
-
 					}
 				}else{
 					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
