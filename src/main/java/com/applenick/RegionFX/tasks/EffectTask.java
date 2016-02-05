@@ -29,14 +29,8 @@ public class EffectTask implements Runnable {
 	public void run() {
 		for(Player player : RegionFX.get().getServer().getOnlinePlayers()){
 			for(ProtectedRegion region : RegionFX.get().getEffectRegionManager().getLoadedRegions().keySet()){
-				if(RegionFX.get().getEffectRegionManager().insideRegion(player, region)){
-					
-					
-					if(!RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
-						EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
-						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
-						continue;
-					}else{
+				if(RegionFX.get().getEffectRegionManager().insideRegion(player, region)){					
+					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
 						EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
 						if(ep.getRegion().getRegion() != region){
 							//Remove player from an overlapping Region & Add new Region
@@ -45,7 +39,10 @@ public class EffectTask implements Runnable {
 
 							EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
 							RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));							
-						}
+						}						
+					}else{
+						EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
+						RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
 					}
 				}else{
 					if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
