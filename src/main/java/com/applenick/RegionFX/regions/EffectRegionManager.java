@@ -1,6 +1,7 @@
 package com.applenick.RegionFX.regions;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import com.applenick.RegionFX.RegionFX;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -22,14 +24,18 @@ Copyright © 2016 , AppleNick, All rights reserved.
 public class EffectRegionManager {
 
 	private HashMap<ProtectedRegion,EffectRegion> loaded_regions;
+	private List<EffectPlayer> effected_players;
 
 
 	public EffectRegionManager(){
 		this.loaded_regions = Maps.newHashMap();
+		this.effected_players = Lists.newArrayList();
 
 		for(String s : RegionFX.get().getConfig().getStringList("regions")){
 			String[] info = StringUtils.splitByWholeSeparator(s, ":");
-
+			//For Debug Purposes
+			RegionFX.get().console(info.toString());
+			
 			if(info.length < 5 || info == null){
 				RegionFX.get().console(ChatColor.DARK_RED + "There was an empty or incomplete entry saved. Please delete config or restore it to an eariler save.");
 				RegionFX.get().getServer().getPluginManager().disablePlugin(RegionFX.get());
@@ -74,7 +80,7 @@ public class EffectRegionManager {
 		LocalPlayer lp = RegionFX.getWorldGuard().wrapPlayer(player);
 		return region.contains(lp.getPosition());
 	}
-
+	
 
 
 	public ProtectedRegion getRegion(String name , World world){
@@ -83,6 +89,34 @@ public class EffectRegionManager {
 
 	public void addEffectRegion(EffectRegion eRegion) {
 		this.loaded_regions.put(eRegion.getRegion(), eRegion);
+	}
+	
+	
+	public void addEffectedPlayer(EffectPlayer player){
+		this.effected_players.add(player);
+	}
+	
+	public void removeEffectedPlayer(EffectPlayer player){
+		this.effected_players.remove(player);
+	}
+	
+	public EffectPlayer getEffectPlayer(Player player){
+		for(EffectPlayer ep : this.effected_players){
+			if(ep.getPlayer() == player){
+				return ep;
+			}
+		}
+		return null;
+	}
+
+
+	public boolean isPlayerEffected(Player player) {
+		for(EffectPlayer p : this.effected_players){
+			if(p.getPlayer() == player){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
