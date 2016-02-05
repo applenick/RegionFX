@@ -85,6 +85,7 @@ public class RegionCommands {
 						return;
 					}else{
 						player.sendMessage(ChatColor.RED + "Please provide a valid Potion Effect");
+						player.sendMessage(ChatColor.GRAY + "You can view a list of effects by using" + ChatColor.LIGHT_PURPLE + " /regionfx potions");
 						return;
 					}
 				}else{
@@ -119,9 +120,7 @@ public class RegionCommands {
 		
 		String name = args.getString(0);
 		
-		if(RegionFX.get().getEffectRegionManager().getEffectRegion(name) != null){
-			EffectRegion region = RegionFX.get().getEffectRegionManager().getEffectRegion(name);
-			
+		if(RegionFX.get().getEffectRegionManager().getEffectRegion(name) != null){			
 			List<String> regions = RegionFX.get().getConfig().getStringList("regions");
 			
 			for(String s : regions){
@@ -147,6 +146,8 @@ public class RegionCommands {
 
 	}
 	
+	
+	
 	// /regionfx edit [Name] [New Effect] [New Level] [New Time]
 	@Command(
 			aliases = {"list"},
@@ -165,6 +166,32 @@ public class RegionCommands {
 			sender.sendMessage(ChatColor.AQUA + rg.getName() + ChatColor.GRAY +  " - " + ChatColor.GREEN + rg.getType().getName().toLowerCase() +  ChatColor.GRAY + " - " + ChatColor.YELLOW + rg.getLevel());
 		}
 	
+		sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----------------------");
+		return;
+	}
+	
+	// /regionfx potions
+	@Command(
+			aliases = {"potions"},
+			desc = "Display a list of potions"
+			)
+	@CommandPermissions("regionfx.admin")
+	public static void listPotionsCommand(final CommandContext args, final CommandSender sender) throws CommandException{
+		sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----" + ChatColor.LIGHT_PURPLE + "Potion Effects" + ChatColor.GRAY + ChatColor.STRIKETHROUGH + "-----");
+		
+		StringBuilder sb = new StringBuilder();
+		
+		int count = 0;
+		
+		for(PotionEffectType type : PotionEffectType.values()){
+			if(count > 0){
+				sb.append(ChatColor.DARK_AQUA + ", " + ChatColor.AQUA  + type.getName());
+			}else{
+				sb.append(ChatColor.AQUA + type.getName());
+			}
+		}
+
+		sender.sendMessage(sb.toString());
 		sender.sendMessage(ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "-----------------------");
 		return;
 	}
