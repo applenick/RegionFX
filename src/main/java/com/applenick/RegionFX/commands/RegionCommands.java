@@ -121,9 +121,10 @@ public class RegionCommands {
 		
 		String name = args.getString(0);
 		
-		if(RegionFX.get().getEffectRegionManager().getEffectRegion(name) != null){			
-			List<String> regions = RegionFX.get().getConfig().getStringList("regions");
+		if(RegionFX.get().getEffectRegionManager().getEffectRegion(name) != null){		
+			EffectRegion region = RegionFX.get().getEffectRegionManager().getEffectRegion(name);
 			
+			List<String> regions = RegionFX.get().getConfig().getStringList("regions");
 			List<String> save = Lists.newArrayList();
 			
 			for(String s : regions){
@@ -133,8 +134,12 @@ public class RegionCommands {
 				}
 			}
 			
+			//Remove from Config
 			RegionFX.get().getConfig().set("regions", save);
 			RegionFX.get().saveConfig();
+			
+			//Remove from Loaded Manager
+			RegionFX.get().getEffectRegionManager().removeEffectRegion(region);
 			
 			
 			RegionFX.get().console(ChatColor.RED + name + ChatColor.GREEN + " has been deleted from the config.");

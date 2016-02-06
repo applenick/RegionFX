@@ -144,4 +144,16 @@ public class EffectRegionManager {
 		return false;
 	}
 
+	public void removeEffectRegion(EffectRegion region) {
+		
+		for(EffectPlayer player : this.effected_players){
+			if(player.getRegion() == region){
+				player.removeEffects();
+				removeEffectedPlayer(player);
+			}
+		}
+		
+		this.loaded_regions.remove(region);		
+	}
+
 }
