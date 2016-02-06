@@ -1,6 +1,7 @@
 package com.applenick.RegionFX.regions;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -144,16 +145,16 @@ public class EffectRegionManager {
 		return false;
 	}
 
-	public void removeEffectRegion(EffectRegion region) {
-		
-		for(EffectPlayer player : this.effected_players){
+	public void removeEffectRegion(EffectRegion region) {		
+		for(Iterator<EffectPlayer> players = this.effected_players.iterator(); players.hasNext();){
+			EffectPlayer player = players.next();
 			if(player.getRegion() == region){
 				player.removeEffects();
-				removeEffectedPlayer(player);
+				players.remove();
 			}
 		}
 		
-		this.loaded_regions.remove(region);		
+		this.loaded_regions.remove(region);
 	}
 
 }
