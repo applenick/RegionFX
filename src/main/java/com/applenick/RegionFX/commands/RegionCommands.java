@@ -183,12 +183,13 @@ public class RegionCommands {
 		
 		int count = 0;
 		
-		for(PotionEffectType type : PotionEffectType.values()){
+		for(PotionEffectType pet : PotionEffectType.values()){
 			if(count > 0){
-				sb.append(ChatColor.DARK_AQUA + ", " + ChatColor.AQUA  + type.getName());
+				sb.append(ChatColor.DARK_AQUA + ", " + ChatColor.AQUA  + pet.getName());
 			}else{
-				sb.append(ChatColor.AQUA + type.getName());
+				sb.append(ChatColor.AQUA + pet.getName());
 			}
+			count++;
 		}
 
 		sender.sendMessage(sb.toString());
