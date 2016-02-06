@@ -154,7 +154,7 @@ public class EffectRegionManager {
 			}
 		}
 		
-		this.loaded_regions.remove(region);
+		this.loaded_regions.remove(region.getRegion());
 	}
 
 }
