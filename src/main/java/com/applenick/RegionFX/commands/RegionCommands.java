@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.applenick.RegionFX.RegionFX;
 import com.applenick.RegionFX.regions.EffectRegion;
+import com.google.common.collect.Lists;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandException;
@@ -123,14 +124,16 @@ public class RegionCommands {
 		if(RegionFX.get().getEffectRegionManager().getEffectRegion(name) != null){			
 			List<String> regions = RegionFX.get().getConfig().getStringList("regions");
 			
+			List<String> save = Lists.newArrayList();
+			
 			for(String s : regions){
 				String[] info = StringUtils.splitByWholeSeparator(s, ":");
-				if(info[0].equalsIgnoreCase(name)){
-					regions.remove(s);
+				if(info[0].equalsIgnoreCase(name) != true){
+					save.add(s);
 				}
 			}
 			
-			RegionFX.get().getConfig().set("regions", regions);
+			RegionFX.get().getConfig().set("regions", save);
 			RegionFX.get().saveConfig();
 			
 			
