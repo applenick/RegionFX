@@ -8,6 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.applenick.RegionFX.commands.RegionCommands;
+import com.applenick.RegionFX.nomove.NoMoveRegionManager;
 import com.applenick.RegionFX.regions.EffectRegionManager;
 import com.applenick.RegionFX.tasks.EffectTaskManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
@@ -47,6 +48,11 @@ public class RegionFX extends JavaPlugin {
 	public EffectTaskManager getTaskManager(){
 		return taskManager;
 	}
+	
+	private NoMoveRegionManager noMoveManager;
+	public NoMoveRegionManager getNoMoveRegionManager(){
+		return noMoveManager;
+	}
 
 	
 	@Override
@@ -62,6 +68,7 @@ public class RegionFX extends JavaPlugin {
 		//Setup Region Manager
 		regionManager = new EffectRegionManager();
 		taskManager = new EffectTaskManager();
+		noMoveManager = new NoMoveRegionManager();
 		
 		//Setup Commands
 		this.setupCommands();

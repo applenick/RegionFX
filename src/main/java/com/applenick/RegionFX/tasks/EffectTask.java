@@ -26,7 +26,10 @@ public class EffectTask implements Runnable {
 
 	@Override
 	public void run() {
+		//Loop through every player
 		for(Player player : RegionFX.get().getServer().getOnlinePlayers()){
+			
+			//Check if player is inside of an Effect Region
 			if(RegionFX.get().getEffectRegionManager().insideRegion(player)){
 				ProtectedRegion region = RegionFX.get().getEffectRegionManager().getPlayerRegion(player);
 				if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
@@ -43,13 +46,22 @@ public class EffectTask implements Runnable {
 					EffectRegion er = RegionFX.get().getEffectRegionManager().getLoadedRegions().get(region);
 					RegionFX.get().getEffectRegionManager().addEffectedPlayer(new EffectPlayer(player , er));
 				}
-			}else{
+			}else if(RegionFX.get().getNoMoveRegionManager().insideNoMoveRegion(player)){
+				if(RegionFX.get().getNoMoveRegionManager().isNoMover(player) != true){
+					RegionFX.get().getNoMoveRegionManager().addPlayer(player);
+				}
+			}
+			else{
 				if(RegionFX.get().getEffectRegionManager().isPlayerEffected(player)){
 					EffectPlayer ep = RegionFX.get().getEffectRegionManager().getEffectPlayer(player);
 					if(ep != null){
 						ep.removeEffects();
 						RegionFX.get().getEffectRegionManager().removeEffectedPlayer(ep);
 					}
+				}
+				
+				if(RegionFX.get().getNoMoveRegionManager().isNoMover(player)){
+					RegionFX.get().getNoMoveRegionManager().removePlayer(player);
 				}
 			}
 		}
