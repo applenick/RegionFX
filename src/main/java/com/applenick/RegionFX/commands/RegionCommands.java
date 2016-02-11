@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import com.applenick.RegionFX.RegionFX;
+import com.applenick.RegionFX.nomove.NoMoveRegion;
 import com.applenick.RegionFX.regions.EffectRegion;
 import com.google.common.collect.Lists;
 import com.sk89q.minecraft.util.commands.Command;
@@ -41,9 +42,10 @@ public class RegionCommands {
 	// /regionfx create [Name] [Effect] [Level] 
 	@Command(
 			aliases = {"create"},
-			desc = "Create an Effect Region",
+			desc = "Create a RegionFX Region",
 			min = 0,
-			max = 3
+			max = 3,
+			flags = "n"
 			)
 	@CommandPermissions("regionfx.admin")
 	public static void createRegionCommand(final CommandContext args, final CommandSender sender) throws CommandException{
@@ -56,11 +58,42 @@ public class RegionCommands {
 		
 		Player player = (Player) sender;		
 		
-		if(args.argsLength() < 3){
-			player.sendMessage(ChatColor.RED + "Please provide a [name] [effect] [level]");
+		
+		if(args.argsLength() == 0){
+			player.sendMessage(ChatColor.RED + "Please provide -n [name] [effect] [level]");
 			return;
 		}
 		
+		if(args.argsLength() == 1 && args.hasFlag('n')){
+			//NoMoveRegion
+			String name = args.getString(0);
+			
+			ProtectedRegion pr = RegionFX.getWorldGuard().getRegionManager(player.getWorld()).getRegion(name);
+			
+			if(pr != null){
+				NoMoveRegion nm = new NoMoveRegion(name , player.getWorld());
+				
+				//Set WorldGuard Region
+				nm.setRegion(pr);
+				
+				//Save New Region
+				nm.save();
+				
+				player.sendMessage(ChatColor.AQUA + name + ChatColor.GREEN + " has been created and saved");
+				return;
+			}else{
+				player.sendMessage(ChatColor.AQUA + name + ChatColor.RED + " does not exist. Please Create Region in WorldGuard first.");
+				return;
+			}
+		}else if(args.argsLength() == 1){
+			player.sendMessage(ChatColor.RED + "Please provide a [name] [effect] [level]");
+			return;
+		}
+				
+		if(args.argsLength() == 2){
+			player.sendMessage(ChatColor.RED + "Please provide a [name] [effect] [level]");
+			return;
+		}
 		
 		if(args.argsLength() == 3){
 			String name = args.getString(0);
@@ -155,8 +188,6 @@ public class RegionCommands {
 	}
 	
 	
-	
-	// /regionfx edit [Name] [New Effect] [New Level] [New Time]
 	@Command(
 			aliases = {"list"},
 			desc = "List active Effect Regions"

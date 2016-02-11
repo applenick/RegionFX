@@ -1,2 +1,7 @@
-#Config Format - name:effect:level:active:world
+#Config
+#Effect Region Format - name:effect:level:active:world
 regions:
+
+
+#No Move Region Format  - name:world
+no-move-regions:

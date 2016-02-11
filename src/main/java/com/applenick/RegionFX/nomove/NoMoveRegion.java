@@ -1,7 +1,9 @@
 package com.applenick.RegionFX.nomove;
 
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 
+import com.applenick.RegionFX.RegionFX;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 /************************************************
@@ -68,7 +70,12 @@ public class NoMoveRegion {
 	public void setWorld(World world) {
 		this.world = world;
 	}
-	
+		
+	public void save(){
+		ConfigurationSection section = RegionFX.get().getConfig().getConfigurationSection("no-move-regions");
+		section.set(name, world.getName());
+		RegionFX.get().saveConfig();
+	}
 
 	
 }

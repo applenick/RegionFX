@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.applenick.RegionFX.RegionFX;
@@ -23,6 +26,8 @@ public class NoMoveRegionManager {
 	
 	public NoMoveRegionManager(){
 		this.nomove_regions = Maps.newHashMap();
+		
+		this.fetchNoMoveRegions();
 	}
 	
 	public void addRegion(NoMoveRegion region , ProtectedRegion wgRegion){
@@ -74,5 +79,18 @@ public class NoMoveRegionManager {
 		return false;
 	}
 	
-	
+	public void fetchNoMoveRegions(){		
+		ConfigurationSection section = RegionFX.get().getConfig().getConfigurationSection("no-move-regions");
+		for(String s : section.getKeys(false)){
+			World w = Bukkit.getWorld(section.getString(s));
+			if(w != null){
+				NoMoveRegion region = new NoMoveRegion(s , w);
+				ProtectedRegion rg = RegionFX.getWorldGuard().getRegionManager(w).getRegion(s);	
+				if(rg != null){
+					region.setRegion(rg);
+					this.nomove_regions.put(region, rg);
+				}
+			}
+		}
+	}
 }
