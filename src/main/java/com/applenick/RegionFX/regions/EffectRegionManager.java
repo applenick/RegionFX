@@ -126,6 +126,10 @@ public class EffectRegionManager {
 		this.effected_players.remove(player);
 	}
 	
+	public List<EffectPlayer> getEffectPlayers() {
+		return this.effected_players;
+	}
+	
 	public EffectPlayer getEffectPlayer(Player player){
 		for(EffectPlayer ep : this.effected_players){
 			if(ep.getPlayer() == player){
@@ -156,5 +160,4 @@ public class EffectRegionManager {
 		
 		this.loaded_regions.remove(region.getRegion());
 	}
-
 }
