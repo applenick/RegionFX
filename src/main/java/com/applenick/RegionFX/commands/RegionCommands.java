@@ -28,7 +28,7 @@ public class RegionCommands {
 	
 	public static class RegionParent{
 		@Command(
-				aliases = {"regionfx" , "rfx"},
+				aliases = {"regionfx" , "rfx", "erg" , "effectregion"},
 				desc = "Main RegionFX Command"
 				)
 		@CommandPermissions("regionfx.admin")
