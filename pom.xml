@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.applenick</groupId>
 	<artifactId>RegionFX</artifactId>
-	<version>1.1.0-RELEASE</version>
+	<version>1.2.0-RELEASE</version>
 	<name>RegionFX</name>
 
 	<repositories>
